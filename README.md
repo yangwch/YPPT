@@ -1,4 +1,4 @@
-# vppt
+# YPPT
 
 ## Project setup
 ```
