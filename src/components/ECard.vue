@@ -1,5 +1,5 @@
 <template>
-  <div class="card-box">
+  <div :class="['card-box', {picking: pickingPoint}]">
     <div class="card">
       <slot></slot>
     </div>
@@ -9,7 +9,34 @@
 <script type="text/javascript">
   export default {
     props: {
-      pickingPoint: Boolean
+      pickingPoint: {
+        type: Boolean,
+        default () {
+          return false
+        }
+      }
+    },
+    watch: {
+      pickingPoint (v) {
+        this.detectPickingEvent(v)
+      }
+    },
+    methods: {
+      detectPickingEvent (flag) {
+        if (flag) {
+          this.$el.addEventListener('click', this.emitPickingEvent, false)
+        } else {
+          this.$el.removeEventListener('click', this.emitPickingEvent)
+        }
+      },
+      emitPickingEvent (evt) {
+        // console.log(evt)
+        let { offsetX, offsetY } = evt
+        this.$emit('picked', {
+          x: offsetX,
+          y: offsetY
+        })
+      }
     }
   }
 </script>
@@ -20,6 +47,9 @@
     min-height: 640px;
     overflow: auto;
     position: relative;
+    &.picking {
+      cursor: crosshair;
+    }
     .card {
       width: 960px;
       height: 540px;

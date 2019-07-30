@@ -1,7 +1,12 @@
 <template>
-  <div class="p" contenteditable="true" placeholder="请输入内容" :style="style" v-html="currentValue"></div>
+  <div
+    :class="['p', {placeholder: showPlaceholder}]"
+    :style="style"
+  >
+    <div v-html="currentValue" contenteditable="true"></div>
+  </div>
 </template>
-<style type="text/css">
+<style lang="less">
   .p {
     position: absolute;
     outline: none;
@@ -10,8 +15,19 @@
     color: rgb(103, 107, 111);
     stroke-width: 0px;
     border: 1px solid #ccc;
-    .placeholder {
+    padding: 10px 15px;
+    &.placeholder:after {
       color: #ccc;
+      content: "\8BF7\8F93\5165\5185\5BB9";
+      position: absolute;
+      left: 15px;
+      top: 10px;
+      width: 120px;
+      z-index: -1;
+    }
+    div {
+      outline: none;
+      min-width: 100px;
     }
   }
 </style>
@@ -19,6 +35,8 @@
 <script>
   export default {
     name: 'p-editor',
+    directives: {
+    },
     props: {
       value: {
         type: String,
@@ -26,29 +44,35 @@
           return ''
         }
       },
-      left: [String, Number],
-      top: [String, Number]
+      x: [String, Number],
+      y: [String, Number],
+      w: [Number]
     },
     computed: {
       style() {
         return {
-          left: this.left,
-          top: this.top
+          left: typeof this.x === 'string' ? this.x : this.x + 'px',
+          top: typeof this.y === 'string' ? this.y : this.y + 'px'
         }
       }
     },
     data () {
       return {
+        showPlaceholder: !this.value,
         currentValue: this.value || ''
       }
     },
-    watch: {
-      currentValue () {
-        this.$emit('input', this.currentValue)
+    mounted () {
+      this.$el.oninput = () => {
+        let html = this.$el.innerHTML
+        this.showPlaceholder = !html.trim()
+        this.$emit('input', html)
       }
     },
-    mounted () {
-      this.$el.oninput = () => this.currentValue = this.$el.innerHTML
+    methods: {
+      onResize () {
+        // console.log(e)
+      }
     }
   }
 </script>
