@@ -20,9 +20,9 @@ const state = {
       id: 2,
       x: 200,
       y: 200,
-      width: 120,
+      width: 220,
       height: 30,
-      value: '',
+      value: '一段话<div>换行　内容</div>',
       type: 'p'
     },
     {
@@ -50,6 +50,10 @@ const mutations = {
   },
   addImg (state, imgData) {
     state.datas.push(Object.assign({ id: Date.now(), value: '', width: 120, height: 120, type: 'img', x: 400, y: 100, angle: 0 }, imgData))
+  },
+  resize (state, {id, width, x}) {
+    let item = state.datas.find(item => item.id === id)
+    Object.assign(item, {x, width})
   }
 }
 

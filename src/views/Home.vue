@@ -17,7 +17,7 @@
       <a-layout-content class="content">
         <e-card :picking-point="picking" @picked="pickedPoint">
           <template v-for="item in pdata">
-            <p-editor :key="item.id" :x="item.x" :y="item.y" :w="item.width" :h="item.height" :value="item.value" v-if="item.type === 'p'" />
+            <p-editor @resize="(options) => onResize(item, options)" :key="item.id" :x="item.x" :y="item.y" :w="item.width" :h="item.height" :value="item.value" v-if="item.type === 'p'" />
             <p-img :key="item.id"  :x="item.x" :y="item.y" :w="item.width" :h="item.height" :src="item.src" v-else-if="item.type === 'img'" />
           </template>
         </e-card>
@@ -83,6 +83,9 @@ export default {
     },
     addImg (imgData) {
       this.$store.commit('addImg', imgData)
+    },
+    onResize (item, options) {
+      this.$store.commit('resize', {id: item.id, ...options})
     }
   }
 }
