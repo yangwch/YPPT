@@ -151,7 +151,7 @@
       },
       move (ev) {
         ev.stopPropagation()
-        if (!this.resizeW && !this.resizeE) {
+        if (!this.resizeW && !this.resizeE && !this.moving) {
           return
         }
         const x = ev.pageX || (ev.touches && ev.touches[0].pageX)
@@ -159,7 +159,7 @@
         if (typeof x !== 'number') {
           return
         }
-        let { mouseX, mouseY, cx, width } = this.stickStartPos
+        let { mouseX, mouseY, cx, cy, width } = this.stickStartPos
         let rx = x - mouseX
         // console.log('move', [x, y, rx])
         if (this.resizeE && rx !== 0) {
@@ -175,15 +175,19 @@
             width: widthf
           })
         } else if (this.moving) {
+          let ry = y - mouseY
           console.log('moving', {
             x,
             y,
-            cx,
-            cy
+            rx,
+            ry
           })
-          let ry = y - mouseY
-          this.cx = this.cx + rx
-          this.cy = this.cy + ry
+          const xf = this.cx = cx + rx
+          const yf = this.cy = cy + ry
+          this.$emit('drag', {
+            x: xf,
+            y: yf
+          })
         }
       },
       up () {
