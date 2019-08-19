@@ -1,16 +1,10 @@
 <template>
   <a-layout class="fit">
-    <!-- <a-layout-header> -->
-    <a-layout class="tools">
-      <a-layout-sider class="sider"></a-layout-sider>
-      <a-layout-content>
+    <header-lay>
+      <template v-slot:content>
         <editor-tools @startPicking="startPicking" @addImg="addImg" />
-      </a-layout-content>
-      <a-layout-sider class="sider">
-        sider
-      </a-layout-sider>
-    </a-layout>
-    <!-- </a-layout-header> -->
+      </template>
+    </header-lay>
    
     <a-layout>
       <a-layout-sider class="sider"></a-layout-sider>
@@ -39,12 +33,7 @@
     width: 100%;
     height: 100%;
   }
-  .header {
-    text-align: center;
-    border: solid 1px #e5e5e5;
-    background-color: #f7f7f7;
-    overflow: hidden;
-  }
+  
   .sider {
     border-top: 0;
     background-color: #f7f7f7;
@@ -52,27 +41,22 @@
   .content {
     overflow: auto;
   }
-  .tools {
-    height: 48px;
-    background-color: #f7f7f7;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-items: center;
-  }
+  
 </style>
 <script>
 import ECard from '../components/ECard.vue'
 import PEditor from '../components/PEditor.vue'
 import PImg from '../components/PImg.vue'
 import EditorTools from '../components/EditorTools.vue'
+import HeaderLay from '../layout/HeaderLay.vue'
 import { mapState } from 'vuex'
 export default {
   components: {
     ECard,
     PEditor,
     EditorTools,
-    PImg
+    PImg,
+    HeaderLay
   },
   computed: {
     ...mapState({

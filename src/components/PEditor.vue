@@ -25,7 +25,7 @@
     font-size: 18px;
     color: rgb(103, 107, 111);
     stroke-width: 0px;
-    border: 1px solid #ccc;
+    border: 1px solid rgb(107, 153, 224);
     box-sizing: border-box;
     &.placeholder:after {
       color: #ccc;
@@ -176,12 +176,7 @@
           })
         } else if (this.moving) {
           let ry = y - mouseY
-          console.log('moving', {
-            x,
-            y,
-            rx,
-            ry
-          })
+          // console.log('moving', { x, y, rx, ry })
           const xf = this.cx = cx + rx
           const yf = this.cy = cy + ry
           this.$emit('drag', {
