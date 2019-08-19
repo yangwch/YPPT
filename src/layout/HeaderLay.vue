@@ -20,6 +20,7 @@
     display: flex;
     align-items: center;
     justify-items: center;
+    border-bottom: 1px solid #ddd;
     &-content {
       // height: 100%;
       // display: flex;

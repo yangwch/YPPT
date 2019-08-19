@@ -7,7 +7,11 @@
     </header-lay>
    
     <a-layout>
-      <a-layout-sider class="sider"></a-layout-sider>
+      <a-layout-sider class="sider">
+        <e-add-page></e-add-page>
+        <e-card-view-item index="1" active></e-card-view-item>
+        <e-card-view-item index="2"></e-card-view-item>
+      </a-layout-sider>
       <a-layout-content class="content">
         <e-card :picking-point="picking" @picked="pickedPoint">
           <template v-for="item in pdata">
@@ -37,6 +41,7 @@
   .sider {
     border-top: 0;
     background-color: #f7f7f7;
+    border-right: 1px solid #ddd;
   }
   .content {
     overflow: auto;
@@ -49,6 +54,8 @@ import PEditor from '../components/PEditor.vue'
 import PImg from '../components/PImg.vue'
 import EditorTools from '../components/EditorTools.vue'
 import HeaderLay from '../layout/HeaderLay.vue'
+import ECardViewItem from '../components/ECardViewItem.vue'
+import EAddPage from '../components/EAddPage.vue'
 import { mapState } from 'vuex'
 export default {
   components: {
@@ -56,7 +63,9 @@ export default {
     PEditor,
     EditorTools,
     PImg,
-    HeaderLay
+    HeaderLay,
+    ECardViewItem,
+    EAddPage
   },
   computed: {
     ...mapState({
