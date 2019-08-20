@@ -19,11 +19,17 @@
         ></e-card-view-item>
       </a-layout-sider>
       <a-layout-content class="content">
-        <e-card :picking-point="picking" @picked="pickedPoint">
+        <e-card
+          :picking-point="picking"
+          @picked="pickedPoint"
+          @selectRect="onSelectRect"
+        >
           <template v-for="item in pdata">
             <p-editor
               @resize="(options) => onDragResize(item, options)"
               @drag="(options) => onDragResize(item, options)"
+              @dragSelect="onDragSelect"
+              @updateSnapshot="updateSnapshot"
               @active="onActive(item)"
               @deactive="onDeactive"
               :key="item.id"
@@ -33,6 +39,7 @@
               :h="item.height"
               :value="item.value"
               :active="item.active"
+              :selected="item.selected"
               v-if="item.type === 'p'" />
             <p-img :key="item.id"  :x="item.x" :y="item.y" :w="item.width" :h="item.height" :src="item.src" v-else-if="item.type === 'img'" />
           </template>
@@ -109,6 +116,16 @@ export default {
     },
     onDeactive () {
       this.$store.commit('setActiveCardItem', null)
+    },
+    onSelectRect (rect) {
+      this.$store.commit('setSelection', rect)
+    },
+    onDragSelect ({rx, ry}) {
+      this.$store.commit('setSelectionLoc', {rx, ry})
+    },
+    // 更新快照，用于选中时更新位置、大小
+    updateSnapshot () {
+      this.$store.commit('updateSnapshot')
     }
   }
 }

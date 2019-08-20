@@ -1,13 +1,18 @@
 <template>
-  <div :class="['card-box', {picking: pickingPoint}]">
-    <div class="card">
+  <div :class="['card-box', {picking: pickingPoint}]" @mousedown.stop="startDrawing($event)">
+    <div class="card" ref="card">
       <slot></slot>
     </div>
+    <rect-range :x="rectPos.x" :y="rectPos.y" :w="rectPos.w" :h="rectPos.h"></rect-range>
   </div>
-  
 </template>
 <script type="text/javascript">
+  import RectRange from './RectRange.vue'
   export default {
+    name: 'ECard',
+    components: {
+      RectRange
+    },
     props: {
       pickingPoint: {
         type: Boolean,
@@ -20,6 +25,24 @@
       pickingPoint (v) {
         this.detectPickingEvent(v)
       }
+    },
+    data () {
+      return {
+        drawing: false,
+        // 开始点
+        startPos: {},
+        rectPos: { x: 0, y: 0, w: 0, h: 0 }
+      }
+    },
+    mounted () {
+      document.documentElement.addEventListener('mousemove', this.move)
+      document.documentElement.addEventListener('mouseup', this.up)
+      document.documentElement.addEventListener('mouseleave', this.up)
+    },
+    beforeDestroy () {
+      document.documentElement.removeEventListener('mousemove', this.move)
+      document.documentElement.removeEventListener('mouseup', this.up)
+      document.documentElement.removeEventListener('mouseleave', this.up)
     },
     methods: {
       detectPickingEvent (flag) {
@@ -36,6 +59,43 @@
           x: offsetX,
           y: offsetY
         })
+      },
+      getEvPos (ev) {
+        const mouseX = ev.pageX || ev.touches[0].pageX
+        const mouseY = ev.pageY || ev.touches[0].pageY
+        let {layerX, layerY} = ev
+        return {x: layerX, y: layerY, mouseX, mouseY}
+      },
+      // 开始画
+      startDrawing (ev) {
+        if (ev.target === this.$el || ev.target === this.$refs.card) {
+          this.drawing = true
+          
+          Object.assign(this.startPos, this.getEvPos(ev))
+        }
+      },
+      move (ev) {
+        if (this.drawing) {
+          const {x, y, mouseX, mouseY} = this.startPos
+          const {x: ex, y: ey, mouseX: emouseX, mouseY: emouseY} = this.getEvPos(ev)
+          const rx = emouseX - mouseX, ry = emouseY - mouseY,
+            minX = ex > x ? x : ex, minY = ey > y ? y : ey
+          Object.assign(this.rectPos, {
+            x: minX,
+            y: minY,
+            w: Math.abs(rx),
+            h: Math.abs(ry)
+          })
+          // console.log('rect', this.rectPos)
+        }
+      },
+      up (ev) {
+        ev.stopPropagation()
+        if (this.drawing) {
+          this.drawing = false
+          this.$emit('selectRect', this.rectPos)
+          this.rectPos = { x: 0, y: 0, w: 0, h: 0 }
+        }
       }
     }
   }

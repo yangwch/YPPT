@@ -1,8 +1,8 @@
 <template>
   <div
-    :class="['p', {placeholder: showPlaceholder, active: active}]"
+    :class="['p', {placeholder: showPlaceholder, active: active || selected}]"
     :style="style"
-    @click.stop.prevent="onActive"
+    @click.stop="onActive"
     v-clickoutside="onDeActive"
   >
     <div v-html="currentValue" class="paragraph" contenteditable="true" @focus="onActive"></div>
@@ -111,7 +111,8 @@
       x: [String, Number],
       y: [String, Number],
       w: [Number],
-      active: Boolean
+      active: Boolean,
+      selected: Boolean
     },
     computed: {
       style() {
@@ -138,6 +139,18 @@
         stickStartPos: {}
       }
     },
+    watch: {
+      x (val) {
+        if (val !== this.cx) {
+          this.cx = val
+        }
+      },
+      y (val) {
+        if (val !== this.cy) {
+          this.cy = val
+        }
+      }
+    },
     mounted () {
       this.$el.oninput = () => {
         let html = this.$el.innerText
@@ -161,6 +174,9 @@
         this.resizeW = stick === 'west'
         this.resizeE = stick === 'east'
         this.moving = stick === 'move'
+        if (this.selected) {
+          this.$emit('updateSnapshot')
+        }
         this.stickStartPos.mouseX = ev.pageX || ev.touches[0].pageX
         this.stickStartPos.mouseY = ev.pageY || ev.touches[0].pageY
         this.stickStartPos.cx = this.cx
@@ -179,13 +195,14 @@
         }
         let { mouseX, mouseY, cx, cy, width } = this.stickStartPos
         let rx = x - mouseX
-        // console.log('move', [x, y, rx])
+        // 右侧拖动
         if (this.resizeE && rx !== 0) {
           let widthf = this.cw = width + rx
           this.$emit('resize', {
             width: widthf
           })
         } else if (this.resizeW && rx !== 0) {
+          // 左侧拖动
           let widthf = this.cw = width - rx
           let left = this.cx = cx + rx
           this.$emit('resize', {
@@ -193,14 +210,21 @@
             width: widthf
           })
         } else if (this.moving) {
+          // 移动
           let ry = y - mouseY
-          // console.log('moving', { x, y, rx, ry })
-          const xf = this.cx = cx + rx
-          const yf = this.cy = cy + ry
-          this.$emit('drag', {
-            x: xf,
-            y: yf
-          })
+          if (!this.selected) {
+            const xf = this.cx = cx + rx
+            const yf = this.cy = cy + ry
+            this.$emit('drag', {
+              x: xf,
+              y: yf
+            })
+          } else {
+            this.$emit('dragSelect', {
+              rx,
+              ry
+            })
+          }
         }
       },
       up () {
