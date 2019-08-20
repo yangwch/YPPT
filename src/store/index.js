@@ -71,7 +71,7 @@ const mutations = {
   addInputBlock (state, item) {
     state.pickingPoint = false
     let cardItem = state.cards.find(card => state.activeCard === card.id)
-    cardItem.datas.push(Object.assign({ id: Date.now(), value: '', width: 120, height: 30, type: 'p' }, item))
+    cardItem.datas.push(item)
   },
   addImg (state, imgData) {
     let cardItem = state.cards.find(card => state.activeCard === card.id)
@@ -80,7 +80,7 @@ const mutations = {
   resize (state, options) {
     const {id, ...attr} = options
     let cardItem = state.cards.find(card => state.activeCard === card.id)
-    let item = cardItem.datas.find(item => item.id === options.id)
+    let item = cardItem.datas.find(item => item.id === id)
     Object.assign(item, attr)
   },
   // 设置当前选项卡
@@ -114,10 +114,32 @@ const mutations = {
     state.lastestSnapshot = cardItem.datas.map(item => {
       return {...item}
     })
+  },
+  addCard (state, newItem) {
+    state.cards.push(newItem)
+  },
+  updateInput (state, {value, id}) {
+    let cardItem = state.cards.find(card => state.activeCard === card.id)
+    let item = cardItem.datas.find(item => item.id === id)
+    Object.assign(item, {value})
   }
 }
 
-const actions = {}
+const actions = {
+  addCard ({commit}) {
+    const id = Date.now()
+    commit('addCard', {
+      id,
+      datas: []
+    })
+    commit('setActiveCard', id)
+  },
+  addParagraph ({commit}, item) {
+    const id = Date.now()
+    commit('addInputBlock', Object.assign({ id, value: '', width: 120, height: 30, type: 'p' }, item))
+    commit('setActiveCardItem', id)
+  }
+}
 
 const getters = {
   getCards: (state) => {

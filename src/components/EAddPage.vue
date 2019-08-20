@@ -26,7 +26,7 @@ export default {
   name: 'EAddPage',
   methods: {
     handleButtonClick () {
-
+      this.$emit('addCard')
     },
     handleMenuClick () {
 

@@ -5,7 +5,7 @@
     @click.stop="onActive"
     v-clickoutside="onDeActive"
   >
-    <div v-html="currentValue" class="paragraph" contenteditable="true" @focus="onActive"></div>
+    <div ref="paragraph" v-html="currentValue" class="paragraph" contenteditable="true" @focus="onActive"></div>
     <!-- 操作区域 拖动 -->
     <div class="anchor-move"
       @mousedown.stop.prevent="stickDown('move', $event)"></div>
@@ -152,10 +152,11 @@
       }
     },
     mounted () {
-      this.$el.oninput = () => {
-        let html = this.$el.innerText
+      let paragraph = this.$refs.paragraph
+      paragraph.oninput = () => {
+        let html = paragraph.innerText
         this.showPlaceholder = !html.trim()
-        this.$emit('input', html)
+        this.$emit('input', paragraph.innerHTML)
       }
 
       document.documentElement.addEventListener('mousemove', this.move)
@@ -232,7 +233,7 @@
         this.resizeE = false
         this.moving = false
       },
-      onActive (ev) {
+      onActive () {
         this.$emit('active')
       },
       onDeActive () {

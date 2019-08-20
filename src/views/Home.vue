@@ -8,7 +8,7 @@
    
     <a-layout>
       <a-layout-sider class="sider">
-        <e-add-page></e-add-page>
+        <e-add-page @addCard="addCard"></e-add-page>
         <!-- <e-card-view-item index="1" active></e-card-view-item> -->
         <e-card-view-item
           v-for="(item, index) in cards"
@@ -32,6 +32,7 @@
               @updateSnapshot="updateSnapshot"
               @active="onActive(item)"
               @deactive="onDeactive"
+              @input="html => onInputChange(html, item)"
               :key="item.id"
               :x="item.x"
               :y="item.y"
@@ -100,7 +101,7 @@ export default {
       this.$store.commit('startPicking')
     },
     pickedPoint (position) {
-      this.$store.commit('addInputBlock', position)
+      this.$store.dispatch('addParagraph', position)
     },
     addImg (imgData) {
       this.$store.commit('addImg', imgData)
@@ -126,6 +127,12 @@ export default {
     // 更新快照，用于选中时更新位置、大小
     updateSnapshot () {
       this.$store.commit('updateSnapshot')
+    },
+    addCard () {
+      this.$store.dispatch('addCard')
+    },
+    onInputChange (html, item) {
+      this.$store.commit('updateInput', {value: html, id: item.id})
     }
   }
 }
