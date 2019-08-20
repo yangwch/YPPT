@@ -1,14 +1,17 @@
 <template>
   <div
-    :class="['p', {placeholder: showPlaceholder}]"
+    :class="['p', {placeholder: showPlaceholder, active: active}]"
     :style="style"
+    @click.stop.prevent="onActive"
+    v-clickoutside="onDeActive"
   >
-    <div v-html="currentValue" class="paragraph" contenteditable="true"></div>
+    <div v-html="currentValue" class="paragraph" contenteditable="true" @focus="onActive"></div>
     <!-- 操作区域 拖动 -->
     <div class="anchor-move"
       @mousedown.stop.prevent="stickDown('move', $event)"></div>
     <div class="anchor anchor-west"
       @mousedown.stop.prevent="stickDown('west', $event)"
+      @mousestart.stop.prevent="stickDown('west', $event)"
       ></div>
     <div class="anchor anchor-east"
       @mousedown.stop.prevent="stickDown('east', $event)"
@@ -25,8 +28,18 @@
     font-size: 18px;
     color: rgb(103, 107, 111);
     stroke-width: 0px;
-    border: 1px solid rgb(107, 153, 224);
+    border: 1px solid rgba(0, 0, 0, 0);
     box-sizing: border-box;
+    &:hover {
+      border: 1px solid rgb(107, 153, 224);
+    }
+    // 激活时显示重置大小
+    &.active {
+      border: 1px solid rgb(107, 153, 224);
+      .anchor {
+        display: block;
+      }
+    }
     &.placeholder:after {
       color: #ccc;
       content: "\8BF7\8F93\5165\5185\5BB9";
@@ -57,6 +70,7 @@
       height: 100%;
     }
     .anchor {
+      display: none;
       box-sizing: content-box;
       position: absolute;
       top: 50%;
@@ -80,9 +94,13 @@
 </style>
 
 <script>
+  import clickoutside from './../utils/clickoutside'
   export default {
     name: 'p-editor',
     components: {},
+    directives: {
+      clickoutside
+    },
     props: {
       value: {
         type: String,
@@ -92,7 +110,8 @@
       },
       x: [String, Number],
       y: [String, Number],
-      w: [Number]
+      w: [Number],
+      active: Boolean
     },
     computed: {
       style() {
@@ -121,24 +140,23 @@
     },
     mounted () {
       this.$el.oninput = () => {
-        let html = this.$el.innerHTML
+        let html = this.$el.innerText
         this.showPlaceholder = !html.trim()
         this.$emit('input', html)
       }
 
-      document.documentElement.addEventListener('mousemove', this.move);
-      document.documentElement.addEventListener('mouseup', this.up);
-      document.documentElement.addEventListener('mouseleave', this.up);
+      document.documentElement.addEventListener('mousemove', this.move)
+      document.documentElement.addEventListener('mouseup', this.up)
+      document.documentElement.addEventListener('mouseleave', this.up)
+      document.documentElement.addEventListener('click', this.onDeActive)
     },
     beforeDestroy () {
-      document.documentElement.removeEventListener('mousemove', this.move);
-      document.documentElement.removeEventListener('mouseup', this.up);
-      document.documentElement.removeEventListener('mouseleave', this.up);
+      document.documentElement.removeEventListener('mousemove', this.move)
+      document.documentElement.removeEventListener('mouseup', this.up)
+      document.documentElement.removeEventListener('mouseleave', this.up)
+      document.documentElement.removeEventListener('click', this.onDeActive)
     },
     methods: {
-      onResize () {
-        // console.log(e)
-      },
       stickDown (stick, ev) {
         this.resizeW = stick === 'west'
         this.resizeE = stick === 'east'
@@ -189,6 +207,12 @@
         this.resizeW = false
         this.resizeE = false
         this.moving = false
+      },
+      onActive (ev) {
+        this.$emit('active')
+      },
+      onDeActive () {
+        this.$emit('deactive')
       }
     }
   }

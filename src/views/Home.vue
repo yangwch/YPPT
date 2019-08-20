@@ -24,12 +24,15 @@
             <p-editor
               @resize="(options) => onDragResize(item, options)"
               @drag="(options) => onDragResize(item, options)"
+              @active="onActive(item)"
+              @deactive="onDeactive"
               :key="item.id"
               :x="item.x"
               :y="item.y"
               :w="item.width"
               :h="item.height"
               :value="item.value"
+              :active="item.active"
               v-if="item.type === 'p'" />
             <p-img :key="item.id"  :x="item.x" :y="item.y" :w="item.width" :h="item.height" :src="item.src" v-else-if="item.type === 'img'" />
           </template>
@@ -100,6 +103,12 @@ export default {
     },
     onSelectCard(item) {
       this.$store.commit('setActiveCard', item.id)
+    },
+    onActive (item) {
+      this.$store.commit('setActiveCardItem', item.id)
+    },
+    onDeactive () {
+      this.$store.commit('setActiveCardItem', null)
     }
   }
 }
