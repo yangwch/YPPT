@@ -9,8 +9,14 @@
     <a-layout>
       <a-layout-sider class="sider">
         <e-add-page></e-add-page>
-        <e-card-view-item index="1" active></e-card-view-item>
-        <e-card-view-item index="2"></e-card-view-item>
+        <!-- <e-card-view-item index="1" active></e-card-view-item> -->
+        <e-card-view-item
+          v-for="(item, index) in cards"
+          :index="index + 1"
+          :active="item.active"
+          :key="item.id"
+          @click="onSelectCard(item)"  
+        ></e-card-view-item>
       </a-layout-sider>
       <a-layout-content class="content">
         <e-card :picking-point="picking" @picked="pickedPoint">
@@ -56,7 +62,7 @@ import EditorTools from '../components/EditorTools.vue'
 import HeaderLay from '../layout/HeaderLay.vue'
 import ECardViewItem from '../components/ECardViewItem.vue'
 import EAddPage from '../components/EAddPage.vue'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     ECard,
@@ -68,10 +74,13 @@ export default {
     EAddPage
   },
   computed: {
-    ...mapState({
-      pdata: state => state.datas,
-      picking: state => state.pickingPoint
-    })
+    ...mapGetters({
+      pdata: 'getCardDatas',
+      cards: 'getCards'
+    }),
+    picking () {
+      return this.$store.state.pickingPoint
+    }
   },
   data () {
     return { }
@@ -88,6 +97,9 @@ export default {
     },
     onDragResize (item, options) {
       this.$store.commit('resize', {id: item.id, ...options})
+    },
+    onSelectCard(item) {
+      this.$store.commit('setActiveCard', item.id)
     }
   }
 }

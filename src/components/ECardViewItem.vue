@@ -1,5 +1,5 @@
 <template>
-  <div :class="['view-item', {active: active}]">
+  <div :class="['view-item', {active: active}]" @click="$emit('click')">
     <div class="view-item-index" v-text="index">
     </div>
     <div class="view-item-box">
