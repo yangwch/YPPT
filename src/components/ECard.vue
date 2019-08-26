@@ -1,17 +1,55 @@
 <template>
-  <div :class="['card-box', {picking: pickingPoint}]" @mousedown.stop="startDrawing($event)">
-    <div class="card" ref="card">
-      <slot></slot>
+  <div :class="['card-box', {picking: pickingPoint, iconView: isIconView}]" @mousedown.stop="startDrawing($event)">
+    <div
+      class="card"
+      ref="card"
+      :style="data.properties && data.properties.styles"
+    >
+      <template v-for="(item) in data.components">
+        <p-editor
+          :active="item.active"
+          :selected="item.selected"
+          v-if="item.type === COMPONENT_TYPE.TEXT"
+          :key="item.id"
+          :template="item.template"
+          :css="item.css"
+          :properties="item.properties"
+          @click="onSwitchCurPage(index)"
+          @resize="options => $emit('resize', item, options)"
+          @drag="options=> $emit('drag', item, options)"
+          @dragSelect="options => $emit('dragSelect', options)"
+          @updateSnapshot="$emit('updateSnapshot')"
+          @active="$emit('active', item)"
+          @deactive="$emit('deactive')"
+          @input="html => $emit('input', html, item)"
+          ></p-editor>
+        <p-img
+          v-else-if="item.type === COMPONENT_TYPE.IMAGE"
+          :key="item.id"
+          :template="item.template"
+          :css="item.css"
+          :properties="item.properties"
+          :active="item.active"
+          :selected="item.selected"
+          @click="$emit('active', item)"
+          ></p-img>
+      </template>
     </div>
-    <rect-range :x="rectPos.x" :y="rectPos.y" :w="rectPos.w" :h="rectPos.h"></rect-range>
+    <rect-range :drawing="drawing" :start-pos="startPos" @up="up"></rect-range>
   </div>
 </template>
 <script type="text/javascript">
   import RectRange from './RectRange.vue'
+
+  import PEditor from '../components/PEditor.vue'
+  import PImg from '../components/PImage.vue'
+  import {COMPONENT_TYPE} from './../models/ComponentType'
   export default {
     name: 'ECard',
     components: {
-      RectRange
+      RectRange,
+      PEditor,
+      PImg
     },
     props: {
       pickingPoint: {
@@ -19,7 +57,17 @@
         default () {
           return false
         }
-      }
+      },
+      data: {
+        type: Object,
+        default () {
+          return {
+            components: []
+          }
+        }
+      },
+      // 左侧预览
+      isIconView: Boolean
     },
     watch: {
       pickingPoint (v) {
@@ -31,18 +79,10 @@
         drawing: false,
         // 开始点
         startPos: {},
-        rectPos: { x: 0, y: 0, w: 0, h: 0 }
+        // rectPos: { x: 0, y: 0, w: 0, h: 0 },
+        // 组件类型
+        COMPONENT_TYPE
       }
-    },
-    mounted () {
-      document.documentElement.addEventListener('mousemove', this.move)
-      document.documentElement.addEventListener('mouseup', this.up)
-      document.documentElement.addEventListener('mouseleave', this.up)
-    },
-    beforeDestroy () {
-      document.documentElement.removeEventListener('mousemove', this.move)
-      document.documentElement.removeEventListener('mouseup', this.up)
-      document.documentElement.removeEventListener('mouseleave', this.up)
     },
     methods: {
       detectPickingEvent (flag) {
@@ -68,33 +108,32 @@
       },
       // 开始画
       startDrawing (ev) {
-        if (ev.target === this.$el || ev.target === this.$refs.card) {
+        console.log(ev)
+        const cardDom = this.$refs.card
+        if (ev.target === this.$el || ev.target === cardDom) {
           this.drawing = true
-          
           Object.assign(this.startPos, this.getEvPos(ev))
         }
       },
-      move (ev) {
-        if (this.drawing) {
-          const {x, y, mouseX, mouseY} = this.startPos
-          const {x: ex, y: ey, mouseX: emouseX, mouseY: emouseY} = this.getEvPos(ev)
-          const rx = emouseX - mouseX, ry = emouseY - mouseY,
-            minX = ex > x ? x : ex, minY = ey > y ? y : ey
-          Object.assign(this.rectPos, {
-            x: minX,
-            y: minY,
-            w: Math.abs(rx),
-            h: Math.abs(ry)
-          })
-          // console.log('rect', this.rectPos)
-        }
-      },
-      up (ev) {
-        ev.stopPropagation()
+      up (rect) {
         if (this.drawing) {
           this.drawing = false
-          this.$emit('selectRect', this.rectPos)
-          this.rectPos = { x: 0, y: 0, w: 0, h: 0 }
+          const range = this.getDomsRange()
+          let relRect = Object.assign({}, rect, {
+            x: rect.x - range.left,
+            y: rect.y - range.top
+          })
+          // console.log('rect', relRect)
+          this.$emit('selectRect', relRect)
+        }
+      },
+      // 获取el与Card之间的间隙
+      getDomsRange () {
+        const el = this.$el, card = this.$refs.card
+        const rectEl = el.getBoundingClientRect(), rectCard = card.getBoundingClientRect()
+        return {
+          left: rectCard.left - rectEl.left,
+          top: rectCard.top - rectEl.top
         }
       }
     }
@@ -113,6 +152,7 @@
     .card {
       width: 960px;
       height: 540px;
+      margin: 0 auto;
       transform-origin: 0px 0px 0px;
       transform: matrix(1, 0, 0, 1, 50, 50);
       word-break: break-all;
@@ -121,6 +161,13 @@
       outline-color: black;
       box-shadow: 1px 1px 10px #bbb;
       font-family: '-apple-system, BlinkMacSystemFont, "PingFang SC", Helvetica, Tahoma, Arial, "Microsoft YaHei", 微软雅黑, 黑体, Heiti, sans-serif, SimSun, 宋体, serif';
+    }
+    &.iconView {
+      pointer-events: none;
+      .card {
+        margin: 0;
+        transform: scale(0.1333);
+      }
     }
   }
 </style>

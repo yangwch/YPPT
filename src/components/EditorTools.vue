@@ -25,13 +25,13 @@
     <e-separate></e-separate>
     <!-- 字体 -->
     <p-btn no-border>
-      <e-font-select></e-font-select>
+      <e-font-select @input="doCommand"></e-font-select>
     </p-btn>
     <p-btn no-border>
-      <e-font-size-select></e-font-size-select>
+      <e-font-size-select @input="doCommand"></e-font-size-select>
     </p-btn>
     <e-separate></e-separate>
-    <p-btn>
+    <p-btn @click="doCommand('bold')">
       <i class="iconfont icon-bold"></i>
     </p-btn>
     <p-btn>
@@ -105,6 +105,9 @@ export default {
         }
         reader.readAsDataURL(file)
       }
+    },
+    doCommand (cmd, val) {
+      this.$emit('doCommand', cmd, val)
     }
   }
 }

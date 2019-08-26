@@ -1,0 +1,23 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="295.33337px" height="376.6667px" class="slides-canvas" viewBox="-1 -1 222 283" preserveAspectRatio="none"> 
+ <defs> 
+  <linearGradient id="lg_aceade_1Saceade_3Lace9de_77ade9de_ASafe7df_EEb0e5e0_LLb5dfe1_P7b6dde2_SSb8dce3_WEb9dbe3_Y7b9dae3_b9dae3_90_4f_232800" x1="0" y1="173" x2="0" y2="454" spreadMethod="reflect" gradientUnits="userSpaceOnUse"> 
+   <stop offset="0" stop-color="#ACEADE" /> 
+   <stop offset="0.05" stop-color="#ACEADE" /> 
+   <stop offset="0.1" stop-color="#ACE9DE" /> 
+   <stop offset="0.2" stop-color="#ADE9DE" /> 
+   <stop offset="0.3" stop-color="#AFE7DF" /> 
+   <stop offset="0.4" stop-color="#B0E5E0" /> 
+   <stop offset="0.6" stop-color="#B5DFE1" /> 
+   <stop offset="0.7" stop-color="#B6DDE2" /> 
+   <stop offset="0.8" stop-color="#B8DCE3" /> 
+   <stop offset="0.9" stop-color="#B9DBE3" /> 
+   <stop offset="0.95" stop-color="#B9DAE3" /> 
+   <stop offset="1" stop-color="#B9DAE3" /> 
+  </linearGradient> 
+ </defs> 
+ <g text-rendering="geometricPrecision" transform="scale(1, 1)"> 
+  <g transform="matrix(1, 0, 0, 1, -370, -174)"> 
+   <path fill="url(#lg_aceade_1Saceade_3Lace9de_77ade9de_ASafe7df_EEb0e5e0_LLb5dfe1_P7b6dde2_SSb8dce3_WEb9dbe3_Y7b9dae3_b9dae3_90_4f_232800)" d="M369.75 173.25L590.25 173.25 590.25 454.5 369.75 454.5z" /> 
+  </g> 
+ </g> 
+</svg>

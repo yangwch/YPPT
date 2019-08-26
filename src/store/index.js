@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { isInRect } from '../utils/rectHelper'
+// import { isInRect } from '../utils/rectHelper'
+import { getPPTData } from './../service/index'
+import Page from './../models/Page'
+
 Vue.use(Vuex)
 
 const state = {
@@ -58,7 +61,10 @@ const state = {
   pickingPoint: false,
   activeCard: 'c1',
   activeCardItem: null,
-  lastestSnapshot: null
+  lastestSnapshot: null,
+  // 页数据
+  pages: [],
+  currentPage: -1
 }
 
 const mutations = {
@@ -79,9 +85,21 @@ const mutations = {
   },
   resize (state, options) {
     const {id, ...attr} = options
-    let cardItem = state.cards.find(card => state.activeCard === card.id)
-    let item = cardItem.datas.find(item => item.id === id)
-    Object.assign(item, attr)
+    let composeObj = {}
+    Object.keys(attr).forEach(key => {
+      if (key === 'x') {
+        composeObj.left = attr.x
+      } else if (key === 'y') {
+        composeObj.top = attr.y
+      } else {
+        composeObj[key] = attr[key]
+      }
+    })
+    let curPage = getters.getCurrentPageData(state)
+    let item = curPage.components.find(item => item.id === id)
+    const css = Object.assign({}, item.css, composeObj)
+    // console.log('resize', css)
+    item.css = css
   },
   // 设置当前选项卡
   setActiveCard (state, cardId) {
@@ -90,15 +108,22 @@ const mutations = {
   },
   // 设置当前激活段落
   setActiveCardItem (state, itemId) {
-    state.activeCardItem = itemId
+    // state.activeCardItem = itemId
+    if (!itemId) {return}
+    let curPage = getters.getCurrentPageData(state)
+    curPage.components = curPage.components.map(item => {
+      item.selected = false
+      item.active = item.id === itemId
+      return item
+    })
   },
   // 选中
   setSelection (state, rect) {
-    let cardItem = state.cards.find(card => state.activeCard === card.id)
-    cardItem.datas = cardItem.datas.map(item => {
-      return Object.assign({}, item, {
-        selected: isInRect(item, rect)
-      })
+    let curPage = getters.getCurrentPageData(state)
+    curPage.components = curPage.components.map(item => {
+      item.active = false
+      item.isInRect(rect)
+      return item
     })
   },
   setSelectionLoc (state, {rx, ry}) {
@@ -119,9 +144,25 @@ const mutations = {
     state.cards.push(newItem)
   },
   updateInput (state, {value, id}) {
-    let cardItem = state.cards.find(card => state.activeCard === card.id)
-    let item = cardItem.datas.find(item => item.id === id)
-    Object.assign(item, {value})
+    let curPage = getters.getCurrentPageData(state)
+    let item = curPage.components.find(item => item.id === id)
+    item && (item.template = value)
+  },
+  // 初始化数据
+  initPages (state, pages) {
+    let interval = setInterval(() => {
+      let data = pages.splice(0, 1)[0]
+      if (data) {
+        state.pages.push(data)
+      } else {
+        clearInterval(interval)
+      }
+    }, 500)
+    // state.pages = pages
+    state.currentPage = 0
+  },
+  switchCurrentPage (state, index) {
+    state.currentPage = index
   }
 }
 
@@ -138,6 +179,16 @@ const actions = {
     const id = Date.now()
     commit('addInputBlock', Object.assign({ id, value: '', width: 120, height: 30, type: 'p' }, item))
     commit('setActiveCardItem', id)
+  },
+  getPPTData ({commit}) {
+    getPPTData().then(res => {
+      let content = res.data && res.data.content
+      commit('initPages', content.pages.map(item => new Page(item)))
+    })
+  },
+  doCommand (_, {cmd, val}) {
+    console.log('exec', {cmd, val})
+    document.execCommand(cmd, false, val || "")
   }
 }
 
@@ -156,6 +207,19 @@ const getters = {
     } else {
       return []
     }
+  },
+  // 当前页
+  getCurrentPageData: (state) => {
+    return state.pages[state.currentPage]
+  },
+  getPages: (state) => {
+    return state.pages.map((item, index) => {
+      return Object.assign({active: state.currentPage === index}, item)
+    })
+  },
+  getActiveItem: (state) => {
+    const curPage = getters.getCurrentPageData(state)
+    return curPage && curPage.components.find(item => item.active)
   }
 }
 

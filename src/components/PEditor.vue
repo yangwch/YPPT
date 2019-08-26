@@ -53,7 +53,7 @@
       outline: none;
       min-width: 100px;
       cursor: text;
-      margin: 10px 15px;
+      margin: 1px 5px;
       position: relative;
       z-index: 2;
     }
@@ -62,12 +62,11 @@
       position: absolute;
       cursor: move;
       z-index: 1;
-      top: 0;
+      top: -5px;
       left: 0;
-      bottom: 0;
+      bottom: -5px;
       right: 0;
       width: 100%;
-      height: 100%;
     }
     .anchor {
       display: none;
@@ -102,34 +101,31 @@
       clickoutside
     },
     props: {
-      value: {
-        type: String,
-        default () {
-          return ''
-        }
-      },
-      x: [String, Number],
-      y: [String, Number],
-      w: [Number],
       active: Boolean,
-      selected: Boolean
+      selected: Boolean,
+      // 属性
+      template: String,
+      css: Object,
+      properties: Object
     },
     computed: {
       style() {
-        return {
-          left: typeof this.cx === 'string' ? this.cx : this.cx + 'px',
-          top: typeof this.cy === 'string' ? this.cy : this.cy + 'px',
-          width: typeof this.cw === 'string' ? this.cw : this.cw + 'px'
-        }
+        let cssObj = {...this.css}
+        Object.keys(cssObj).forEach(key => {
+          if (['top', 'left', 'width'].indexOf(key) >= 0) {
+            cssObj[key] += 'px'
+          }
+        })
+        return cssObj
       }
     },
     data () {
       return {
-        showPlaceholder: !this.value,
-        currentValue: this.value || '',
-        cx: this.x,
-        cy: this.y,
-        cw: this.w,
+        showPlaceholder: !this.template,
+        currentValue: this.template || '',
+        cx: this.css.left,
+        cy: this.css.top,
+        cw: this.css.width,
         // 是否重置左右大小
         resizeW: false,
         resizeE: false,
@@ -180,9 +176,9 @@
         }
         this.stickStartPos.mouseX = ev.pageX || ev.touches[0].pageX
         this.stickStartPos.mouseY = ev.pageY || ev.touches[0].pageY
-        this.stickStartPos.cx = this.cx
-        this.stickStartPos.cy = this.cy
-        this.stickStartPos.width = this.cw
+        this.stickStartPos.cx = this.css.left
+        this.stickStartPos.cy = this.css.top
+        this.stickStartPos.width = this.css.width
       },
       move (ev) {
         ev.stopPropagation()

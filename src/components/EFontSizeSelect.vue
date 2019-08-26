@@ -4,7 +4,7 @@
       <span v-text="currentValue"></span> <a-icon type="caret-down" />
     </a>
     <a-menu slot="overlay">
-      <a-menu-item v-for="(item, i) in FONT_SIZES" :key="i" @click="onSelectItem(item)">
+      <a-menu-item v-for="(item, i) in FONT_SIZES" :key="i" @mousedown.prevent @click="onSelectItem(item)">
         {{item + 'px'}}
       </a-menu-item>
     </a-menu>
@@ -25,7 +25,7 @@ export default {
   methods: {
     onSelectItem (item) {
       this.currentValue = item
-      this.$emit('input', item)
+      this.$emit('input', 'fontSize', item + 'px')
     }
   }
 }

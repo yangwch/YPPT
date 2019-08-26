@@ -14,6 +14,7 @@
 <style lang="less">
   .tools {
     height: 50px;
+    min-height: 50px;
     flex-grow: 0;
     background-color: #f7f7f7;
     text-align: center;

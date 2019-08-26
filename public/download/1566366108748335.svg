@@ -1,0 +1,23 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="259.33337px" height="223.33337px" class="slides-canvas" viewBox="-1 -1 195 168" preserveAspectRatio="none"> 
+ <defs> 
+  <linearGradient id="lg_e7f9f6_1Se7f9f6_3Le6f9f6_77e6f9f5_ASe4f8f5_EEe2f8f4_LLdcf6f1_P7daf6f0_SSd9f5f0_WEd8f5ef_Y7d7f5ef_d7f5ef_90_51_14cd40" x1="0" y1="105" x2="0" y2="271" spreadMethod="reflect" gradientUnits="userSpaceOnUse"> 
+   <stop offset="0" stop-color="#E7F9F6" /> 
+   <stop offset="0.05" stop-color="#E7F9F6" /> 
+   <stop offset="0.1" stop-color="#E6F9F6" /> 
+   <stop offset="0.2" stop-color="#E6F9F5" /> 
+   <stop offset="0.3" stop-color="#E4F8F5" /> 
+   <stop offset="0.4" stop-color="#E2F8F4" /> 
+   <stop offset="0.6" stop-color="#DCF6F1" /> 
+   <stop offset="0.7" stop-color="#DAF6F0" /> 
+   <stop offset="0.8" stop-color="#D9F5F0" /> 
+   <stop offset="0.9" stop-color="#D8F5EF" /> 
+   <stop offset="0.95" stop-color="#D7F5EF" /> 
+   <stop offset="1" stop-color="#D7F5EF" /> 
+  </linearGradient> 
+ </defs> 
+ <g text-rendering="geometricPrecision" transform="scale(1, 1)"> 
+  <g transform="matrix(1, 0, 0, 1, -229, -106)"> 
+   <path fill="url(#lg_e7f9f6_1Se7f9f6_3Le6f9f6_77e6f9f5_ASe4f8f5_EEe2f8f4_LLdcf6f1_P7daf6f0_SSd9f5f0_WEd8f5ef_Y7d7f5ef_d7f5ef_90_51_14cd40)" d="M228.19 188.48L269.79 105.27 379.63 105.27 421.23 188.48 379.63 271.69 269.79 271.69z" /> 
+  </g> 
+ </g> 
+</svg>

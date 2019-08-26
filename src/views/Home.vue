@@ -2,48 +2,37 @@
   <a-layout class="fit">
     <header-lay>
       <template v-slot:content>
-        <editor-tools @startPicking="startPicking" @addImg="addImg" />
+        <editor-tools
+          @startPicking="startPicking"
+          @addImg="addImg"
+          @doCommand="doCommand"
+        />
       </template>
     </header-lay>
    
     <a-layout>
-      <a-layout-sider class="sider">
+      <a-layout-sider class="sider sider-list">
         <e-add-page @addCard="addCard"></e-add-page>
-        <!-- <e-card-view-item index="1" active></e-card-view-item> -->
-        <e-card-view-item
-          v-for="(item, index) in cards"
-          :index="index + 1"
-          :active="item.active"
-          :key="item.id"
-          @click="onSelectCard(item)"  
-        ></e-card-view-item>
+        <e-card-list
+          :pages="pages"
+          :current-page="currentPage"
+          @onSwitchCurPage="onSwitchCurPage"
+        ></e-card-list>
       </a-layout-sider>
       <a-layout-content class="content">
         <e-card
           :picking-point="picking"
+          :data="currentPageData"
           @picked="pickedPoint"
           @selectRect="onSelectRect"
+          @resize="onDragResize"
+          @drag="onDragResize"
+          @dragSelect="onDragSelect"
+          @updateSnapshot="updateSnapshot"
+          @active="onActive"
+          @deactive="onDeactive"
+          @input="onInputChange"
         >
-          <template v-for="item in pdata">
-            <p-editor
-              @resize="(options) => onDragResize(item, options)"
-              @drag="(options) => onDragResize(item, options)"
-              @dragSelect="onDragSelect"
-              @updateSnapshot="updateSnapshot"
-              @active="onActive(item)"
-              @deactive="onDeactive"
-              @input="html => onInputChange(html, item)"
-              :key="item.id"
-              :x="item.x"
-              :y="item.y"
-              :w="item.width"
-              :h="item.height"
-              :value="item.value"
-              :active="item.active"
-              :selected="item.selected"
-              v-if="item.type === 'p'" />
-            <p-img :key="item.id"  :x="item.x" :y="item.y" :w="item.width" :h="item.height" :src="item.src" v-else-if="item.type === 'img'" />
-          </template>
         </e-card>
       </a-layout-content>
     </a-layout>
@@ -59,6 +48,9 @@
     border-top: 0;
     background-color: #f7f7f7;
     border-right: 1px solid #ddd;
+    &-list {
+      overflow: auto;
+    }
   }
   .content {
     overflow: auto;
@@ -67,34 +59,44 @@
 </style>
 <script>
 import ECard from '../components/ECard.vue'
-import PEditor from '../components/PEditor.vue'
-import PImg from '../components/PImg.vue'
 import EditorTools from '../components/EditorTools.vue'
 import HeaderLay from '../layout/HeaderLay.vue'
-import ECardViewItem from '../components/ECardViewItem.vue'
+// import ECardViewItem from '../components/ECardViewItem.vue'
 import EAddPage from '../components/EAddPage.vue'
 import { mapGetters } from 'vuex'
+import ECardList from '../components/ECardList.vue'
+import { setTimeout } from 'timers';
 export default {
   components: {
     ECard,
-    PEditor,
+    // PEditor,
     EditorTools,
-    PImg,
+    // PImg,
     HeaderLay,
-    ECardViewItem,
-    EAddPage
+    // ECardViewItem,
+    EAddPage,
+    ECardList
   },
   computed: {
     ...mapGetters({
       pdata: 'getCardDatas',
-      cards: 'getCards'
+      cards: 'getCards',
+      // 当前页数据
+      currentPageData: 'getCurrentPageData',
+      pages: 'getPages',
     }),
     picking () {
       return this.$store.state.pickingPoint
+    },
+    currentPage () {
+      return this.$store.state.currentPage
     }
   },
   data () {
     return { }
+  },
+  mounted () {
+    this.$store.dispatch('getPPTData')
   },
   methods: {
     startPicking () {
@@ -109,17 +111,23 @@ export default {
     onDragResize (item, options) {
       this.$store.commit('resize', {id: item.id, ...options})
     },
-    onSelectCard(item) {
-      this.$store.commit('setActiveCard', item.id)
+    onSwitchCurPage(pageIndex) {
+      this.$store.commit('switchCurrentPage', pageIndex)
     },
     onActive (item) {
-      this.$store.commit('setActiveCardItem', item.id)
+      console.log('active', item)
+      if (item && item.id) {
+        this.$store.commit('setActiveCardItem', item.id)
+      }
     },
     onDeactive () {
       this.$store.commit('setActiveCardItem', null)
     },
     onSelectRect (rect) {
-      this.$store.commit('setSelection', rect)
+      // console.log('rect', rect)
+      setTimeout(() => {
+        this.$store.commit('setSelection', rect)
+      }, 30)
     },
     onDragSelect ({rx, ry}) {
       this.$store.commit('setSelectionLoc', {rx, ry})
@@ -133,6 +141,9 @@ export default {
     },
     onInputChange (html, item) {
       this.$store.commit('updateInput', {value: html, id: item.id})
+    },
+    doCommand (cmd, val) {
+      this.$store.dispatch('doCommand', {cmd, val})
     }
   }
 }

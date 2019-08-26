@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <!-- <ppt-editor :width="833" :height="500"></ppt-editor> -->
+    <ppt-editor :width="833" :height="500"></ppt-editor>
     <div style="width: 100px;height: 100px; border: 1px solid red"><resize-observer @notify="handleResize" />
     </div>
     
@@ -17,7 +17,7 @@
   }
 </style>
 <script>
-// import {pptEditor} from 'ppteditor-vue'
+import {pptEditor} from 'ppteditor-vue'
 import Vue from 'vue'
 import { ResizeObserver } from 'vue-resize'
 
@@ -25,7 +25,7 @@ Vue.component('resize-observer', ResizeObserver)
 export default {
   name: 'HelloWorld',
   components: {
-    // pptEditor
+    pptEditor
   },
   directives: {
     // resize

@@ -1,0 +1,21 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="13.33333in" height="7.5in" class="slides-canvas" viewbox="0 0 960 540" preserveAspectRatio="none"> 
+ <defs> 
+  <linearGradient id="lg_ffffff_1Sffffff_3Lffffff_77fefefe_ASfcfcfc_EEfbfbfb_LLf6f6f6_P7f5f5f5_SSf3f3f3_WEf2f2f2_Y7f2f2f2_f2f2f2_45_0_849520" x1="0" y1="0" x2="749" y2="749" spreadMethod="reflect" gradientUnits="userSpaceOnUse"> 
+   <stop offset="0" stop-color="#FFFFFF" /> 
+   <stop offset="0.05" stop-color="#FFFFFF" /> 
+   <stop offset="0.1" stop-color="#FFFFFF" /> 
+   <stop offset="0.2" stop-color="#FEFEFE" /> 
+   <stop offset="0.3" stop-color="#FCFCFC" /> 
+   <stop offset="0.4" stop-color="#FBFBFB" /> 
+   <stop offset="0.6" stop-color="#F6F6F6" /> 
+   <stop offset="0.7" stop-color="#F5F5F5" /> 
+   <stop offset="0.8" stop-color="#F3F3F3" /> 
+   <stop offset="0.9" stop-color="#F2F2F2" /> 
+   <stop offset="0.95" stop-color="#F2F2F2" /> 
+   <stop offset="1" stop-color="#F2F2F2" /> 
+  </linearGradient> 
+ </defs> 
+ <g text-rendering="geometricPrecision" transform="scale(1, 1)"> 
+  <rect x="0" y="0" width="960" height="540" fill="url(#lg_ffffff_1Sffffff_3Lffffff_77fefefe_ASfcfcfc_EEfbfbfb_LLf6f6f6_P7f5f5f5_SSf3f3f3_WEf2f2f2_Y7f2f2f2_f2f2f2_45_0_849520)" /> 
+ </g> 
+</svg>

@@ -1,0 +1,118 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="531.3333px" height="446.0px" class="slides-canvas" viewBox="-1 -1 399 335" preserveAspectRatio="none"> 
+ <g text-rendering="geometricPrecision" transform="scale(1, 1)"> 
+  <g transform="matrix(1, 0, 0, 1, -489, -107)"> 
+   <path stroke-linecap="round" stroke-width="0.75" stroke="none" fill="none" d="M488.47 106.01L885.91 106.01 885.91 439.74 488.47 439.74z" /> 
+   <path stroke-linecap="round" stroke-width="0.75" stroke="none" fill="none" d="M519.96 118L873.44 118 873.44 427.74 519.96 427.74z" /> 
+   <path stroke-width="0.75" stroke="#D9D9D9" fill="#000000" fill-opacity="0" d="M519.96 427.74L873.44 427.74" /> 
+   <path stroke-width="0.75" stroke="#D9D9D9" fill="#000000" fill-opacity="0" d="M519.96 396.77L873.44 396.77" /> 
+   <path stroke-width="0.75" stroke="#D9D9D9" fill="#000000" fill-opacity="0" d="M519.96 365.79L873.44 365.79" /> 
+   <path stroke-width="0.75" stroke="#D9D9D9" fill="#000000" fill-opacity="0" d="M519.96 334.82L873.44 334.82" /> 
+   <path stroke-width="0.75" stroke="#D9D9D9" fill="#000000" fill-opacity="0" d="M519.96 303.84L873.44 303.84" /> 
+   <path stroke-width="0.75" stroke="#D9D9D9" fill="#000000" fill-opacity="0" d="M519.96 272.87L873.44 272.87" /> 
+   <path stroke-width="0.75" stroke="#D9D9D9" fill="#000000" fill-opacity="0" d="M519.96 241.9L873.44 241.9" /> 
+   <path stroke-width="0.75" stroke="#D9D9D9" fill="#000000" fill-opacity="0" d="M519.96 210.92L873.44 210.92" /> 
+   <path stroke-width="0.75" stroke="#D9D9D9" fill="#000000" fill-opacity="0" d="M519.96 179.95L873.44 179.95" /> 
+   <path stroke-width="0.75" stroke="#D9D9D9" fill="#000000" fill-opacity="0" d="M519.96 148.97L873.44 148.97" /> 
+   <path stroke-width="0.75" stroke="#D9D9D9" fill="#000000" fill-opacity="0" d="M519.96 118L873.44 118" /> 
+   <defs> 
+    <clippath id="ClipRect_cecfae18-0525-48a3-9dda-ba2b7a720545"> 
+     <rect x="520" y="118" width="353" height="310" /> 
+    </clippath> 
+   </defs> 
+   <path clip-path="url(#ClipRect_cecfae18-0525-48a3-9dda-ba2b7a720545)" fill="#D7F5EF" d="M550.3 161.36L578 161.36 578 427.74 550.3 427.74z" /> 
+   <path clip-path="url(#ClipRect_cecfae18-0525-48a3-9dda-ba2b7a720545)" stroke-linecap="round" stroke-width="0.75" stroke="#000000" stroke-opacity="0" fill="none" d="M550.3 161.36L578 161.36 578 427.74 550.3 427.74z" /> 
+   <path clip-path="url(#ClipRect_cecfae18-0525-48a3-9dda-ba2b7a720545)" fill="#AEEADF" d="M638.67 272.87L666.37 272.87 666.37 427.74 638.67 427.74z" /> 
+   <path clip-path="url(#ClipRect_cecfae18-0525-48a3-9dda-ba2b7a720545)" stroke-linecap="round" stroke-width="0.75" stroke="#000000" stroke-opacity="0" fill="none" d="M638.67 272.87L666.37 272.87 666.37 427.74 638.67 427.74z" /> 
+   <path clip-path="url(#ClipRect_cecfae18-0525-48a3-9dda-ba2b7a720545)" fill="#75DDC9" d="M727.04 210.92L754.74 210.92 754.74 427.74 727.04 427.74z" /> 
+   <path clip-path="url(#ClipRect_cecfae18-0525-48a3-9dda-ba2b7a720545)" stroke-linecap="round" stroke-width="0.75" stroke="#000000" stroke-opacity="0" fill="none" d="M727.04 210.92L754.74 210.92 754.74 427.74 727.04 427.74z" /> 
+   <path clip-path="url(#ClipRect_cecfae18-0525-48a3-9dda-ba2b7a720545)" fill="#64C0B1" d="M815.41 148.97L843.11 148.97 843.11 427.74 815.41 427.74z" /> 
+   <path clip-path="url(#ClipRect_cecfae18-0525-48a3-9dda-ba2b7a720545)" stroke-linecap="round" stroke-width="0.75" stroke="#000000" stroke-opacity="0" fill="none" d="M815.41 148.97L843.11 148.97 843.11 427.74 815.41 427.74z" /> 
+   <path stroke-linecap="round" stroke-width="1" stroke="#000000" stroke-opacity="0" fill="#000000" fill-opacity="0" d="M519.96 118L519.96 427.74" /> 
+   <defs> 
+    <clippath id="ClipRect_d01eb81e-bee4-45a3-8b8c-124f3bd9e015"> 
+     <rect x="488" y="106" width="397" height="334" /> 
+    </clippath> 
+   </defs> 
+  </g> 
+  <g transform="matrix(1, 0, 0, 1, 14.125, 313.556976)">
+   <text font-family="Calibri" font-style="normal" font-weight="normal" font-stretch="normal" font-size="8.9775pt" fill="#595959" x="0.4375" y="11.20392">
+    <tspan>
+     0
+    </tspan>
+   </text>
+  </g> 
+  <g transform="matrix(1, 0, 0, 1, 5, 282.583069)">
+   <text font-family="Calibri" font-style="normal" font-weight="normal" font-stretch="normal" font-size="8.9775pt" fill="#595959" x="0.375" y="11.20392">
+    <tspan>
+     0.5
+    </tspan>
+   </text>
+  </g> 
+  <g transform="matrix(1, 0, 0, 1, 14.125, 251.609192)">
+   <text font-family="Calibri" font-style="normal" font-weight="normal" font-stretch="normal" font-size="8.9775pt" fill="#595959" x="0.4375" y="11.20392">
+    <tspan>
+     1
+    </tspan>
+   </text>
+  </g> 
+  <g transform="matrix(1, 0, 0, 1, 5, 220.635284)">
+   <text font-family="Calibri" font-style="normal" font-weight="normal" font-stretch="normal" font-size="8.9775pt" fill="#595959" x="0.375" y="11.20392">
+    <tspan>
+     1.5
+    </tspan>
+   </text>
+  </g> 
+  <g transform="matrix(1, 0, 0, 1, 14.125, 189.661377)">
+   <text font-family="Calibri" font-style="normal" font-weight="normal" font-stretch="normal" font-size="8.9775pt" fill="#595959" x="0.4375" y="11.20392">
+    <tspan>
+     2
+    </tspan>
+   </text>
+  </g> 
+  <g transform="matrix(1, 0, 0, 1, 5, 158.6875)">
+   <text font-family="Calibri" font-style="normal" font-weight="normal" font-stretch="normal" font-size="8.9775pt" fill="#595959" x="0.375" y="11.20392">
+    <tspan>
+     2.5
+    </tspan>
+   </text>
+  </g> 
+  <g transform="matrix(1, 0, 0, 1, 14.125, 127.713593)">
+   <text font-family="Calibri" font-style="normal" font-weight="normal" font-stretch="normal" font-size="8.9775pt" fill="#595959" x="0.4375" y="11.20392">
+    <tspan>
+     3
+    </tspan>
+   </text>
+  </g> 
+  <g transform="matrix(1, 0, 0, 1, 5, 96.7396851)">
+   <text font-family="Calibri" font-style="normal" font-weight="normal" font-stretch="normal" font-size="8.9775pt" fill="#595959" x="0.375" y="11.20392">
+    <tspan>
+     3.5
+    </tspan>
+   </text>
+  </g> 
+  <g transform="matrix(1, 0, 0, 1, 14.125, 65.76579)">
+   <text font-family="Calibri" font-style="normal" font-weight="normal" font-stretch="normal" font-size="8.9775pt" fill="#595959" x="0.4375" y="11.20392">
+    <tspan>
+     4
+    </tspan>
+   </text>
+  </g> 
+  <g transform="matrix(1, 0, 0, 1, 5, 34.7919)">
+   <text font-family="Calibri" font-style="normal" font-weight="normal" font-stretch="normal" font-size="8.9775pt" fill="#595959" x="0.375" y="11.20392">
+    <tspan>
+     4.5
+    </tspan>
+   </text>
+  </g> 
+  <g transform="matrix(1, 0, 0, 1, 14.125, 3.81800079)">
+   <text font-family="Calibri" font-style="normal" font-weight="normal" font-stretch="normal" font-size="8.9775pt" fill="#595959" x="0.4375" y="11.20392">
+    <tspan>
+     5
+    </tspan>
+   </text>
+  </g> 
+  <g transform="matrix(1, 0, 0, 1, -489, -107)"> 
+   <path stroke-linecap="round" stroke-width="0.75" stroke="none" fill="#000000" fill-opacity="0" d="M488.47 106.01L885.91 106.01 885.91 439.74 488.47 439.74z" /> 
+  </g> 
+ </g> 
+</svg>

@@ -11,3 +11,25 @@ export const isInRect = (cardItem, rect) => {
   else
     return false
 }
+
+export const composeStyle = (css) => {
+  let cssObj = {...css}
+  Object.keys(cssObj).forEach(key => {
+    if (['top', 'left', 'width', 'height'].indexOf(key) >= 0) {
+      cssObj[key] += 'px'
+    }
+  })
+  return cssObj
+}
+const genId = () => {
+  let s = 0
+  return () => {
+    return s++
+  }
+}
+
+const gener = genId()
+// 生成id
+export const createNewId = () => {
+  return gener()
+}

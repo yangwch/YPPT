@@ -1,5 +1,5 @@
 <template>
-  <div :class="['p-btn', {'no-border': noBorder}]">
+  <div :class="['p-btn', {'no-border': noBorder}]" @mousedown="onMouseDown($event)" @click.stop.prevent="$emit('click', $event)">
     <slot></slot>
   </div>
 </template>
@@ -30,6 +30,11 @@ export default {
       default () {
         return false
       }
+    }
+  },
+  methods: {
+    onMouseDown (ev) {
+      ev && ev.preventDefault && ev.preventDefault()
     }
   }
 }

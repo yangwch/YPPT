@@ -1,0 +1,13 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="378.00003px" height="1251.3335px" class="slides-canvas" viewBox="-1 -1 284 939" preserveAspectRatio="none"> 
+ <defs> 
+  <linearGradient id="lg_260a80d0_806e7dc3_90_fc_75330c" x1="0" y1="1845" x2="0" y2="2782" spreadMethod="reflect" gradientUnits="userSpaceOnUse"> 
+   <stop offset="0.31" stop-color="#0A80D0" stop-opacity="0.15" /> 
+   <stop offset="1" stop-color="#6E7DC3" stop-opacity="0.5" /> 
+  </linearGradient> 
+ </defs> 
+ <g text-rendering="geometricPrecision" transform="scale(1, 1)"> 
+  <g transform="matrix(1, 0, 0, 1, -768, 28)"> 
+   <path fill="url(#lg_260a80d0_806e7dc3_90_fc_75330c)" d="M908.76-28.27L931.95 4.01C1004.87 115.73 1049.97 270.06 1049.97 440.53 1049.97 611 1004.87 765.33 931.95 877.05L908.76 909.33 885.58 877.05C812.66 765.33 767.56 611 767.56 440.53 767.56 270.06 812.66 115.73 885.58 4.01z" /> 
+  </g> 
+ </g> 
+</svg>

@@ -3,9 +3,7 @@
     <div class="view-item-index" v-text="index">
     </div>
     <div class="view-item-box">
-      <div class="">
-
-      </div>
+      <slot></slot>
     </div>
   </div>
 </template>
@@ -15,7 +13,14 @@ export default {
   props: {
     active: Boolean,
     index: [Number, String]
-  }
+  },
+  watch: {
+    active(val) {
+      if (val) {
+        this.$el.scrollIntoViewIfNeeded()
+      }
+    }
+  },
 }
 </script>
 <style lang="less" scoped>
@@ -46,6 +51,7 @@ export default {
       outline: 1px solid #A0A2A5;
       user-select: none;
       background: #fff;
+      overflow: hidden;
       &.active {
         outline: 1px solid transparent;
         box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);

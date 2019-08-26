@@ -1,0 +1,23 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="244.66669px" height="686.0px" class="slides-canvas" viewBox="-1 -1 184 515" preserveAspectRatio="none"> 
+ <defs> 
+  <linearGradient id="lg_80809ece_1S7f809ece_3L7e809dce_777b819bce_AS758398ce_EE6e8594cd_LL568a8acd_P74b8b85cc_SS408d81cc_WE388e7fcc_Y7358e7fcc_338e7ecc_90_c4_402364" x1="0" y1="785" x2="0" y2="1298" spreadMethod="reflect" gradientUnits="userSpaceOnUse"> 
+   <stop offset="0" stop-color="#809ECE" stop-opacity="0.5" /> 
+   <stop offset="0.05" stop-color="#809ECE" stop-opacity="0.5" /> 
+   <stop offset="0.1" stop-color="#809DCE" stop-opacity="0.49" /> 
+   <stop offset="0.2" stop-color="#819BCE" stop-opacity="0.48" /> 
+   <stop offset="0.3" stop-color="#8398CE" stop-opacity="0.46" /> 
+   <stop offset="0.4" stop-color="#8594CD" stop-opacity="0.43" /> 
+   <stop offset="0.6" stop-color="#8A8ACD" stop-opacity="0.34" /> 
+   <stop offset="0.7" stop-color="#8B85CC" stop-opacity="0.29" /> 
+   <stop offset="0.8" stop-color="#8D81CC" stop-opacity="0.25" /> 
+   <stop offset="0.9" stop-color="#8E7FCC" stop-opacity="0.22" /> 
+   <stop offset="0.95" stop-color="#8E7FCC" stop-opacity="0.21" /> 
+   <stop offset="1" stop-color="#8E7ECC" stop-opacity="0.2" /> 
+  </linearGradient> 
+ </defs> 
+ <g text-rendering="geometricPrecision" transform="scale(1, 1)"> 
+  <g transform="matrix(-1, 0, 0, -1, 326.997467, 272.5288)"> 
+   <path fill="url(#lg_80809ece_1S7f809ece_3L7e809dce_777b819bce_AS758398ce_EE6e8594cd_LL568a8acd_P74b8b85cc_SS408d81cc_WE388e7fcc_Y7358e7fcc_338e7ecc_90_c4_402364)" d="M236-239.79L250.99-222.12C298.15-160.99 327.32-76.53 327.32 16.76 327.32 110.06 298.15 194.52 250.99 255.65L236 273.32 221 255.65C173.84 194.51 144.67 110.06 144.67 16.76 144.67-76.53 173.84-160.99 221-222.12z" /> 
+  </g> 
+ </g> 
+</svg>

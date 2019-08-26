@@ -1,0 +1,23 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="259.33337px" height="223.33337px" class="slides-canvas" viewBox="-1 -1 195 168" preserveAspectRatio="none"> 
+ <defs> 
+  <linearGradient id="lg_aceade_1Sabeade_3Labeadd_77a8e9dc_ASa3e7da_EE9ce6d7_LL8ae1d0_P782e0cd_SS7cdecb_WE77ddca_Y776ddc9_75ddc9_90_53_14cd40" x1="0" y1="107" x2="0" y2="273" spreadMethod="reflect" gradientUnits="userSpaceOnUse"> 
+   <stop offset="0" stop-color="#ACEADE" /> 
+   <stop offset="0.05" stop-color="#ABEADE" /> 
+   <stop offset="0.1" stop-color="#ABEADD" /> 
+   <stop offset="0.2" stop-color="#A8E9DC" /> 
+   <stop offset="0.3" stop-color="#A3E7DA" /> 
+   <stop offset="0.4" stop-color="#9CE6D7" /> 
+   <stop offset="0.6" stop-color="#8AE1D0" /> 
+   <stop offset="0.7" stop-color="#82E0CD" /> 
+   <stop offset="0.8" stop-color="#7CDECB" /> 
+   <stop offset="0.9" stop-color="#77DDCA" /> 
+   <stop offset="0.95" stop-color="#76DDC9" /> 
+   <stop offset="1" stop-color="#75DDC9" /> 
+  </linearGradient> 
+ </defs> 
+ <g text-rendering="geometricPrecision" transform="scale(1, 1)"> 
+  <g transform="matrix(1, 0, 0, 1, -529, -108)"> 
+   <path fill="url(#lg_aceade_1Sabeade_3Labeadd_77a8e9dc_ASa3e7da_EE9ce6d7_LL8ae1d0_P782e0cd_SS7cdecb_WE77ddca_Y776ddc9_75ddc9_90_53_14cd40)" d="M528.35 190.59L569.96 107.38 679.79 107.38 721.39 190.59 679.79 273.8 569.96 273.8z" /> 
+  </g> 
+ </g> 
+</svg>
