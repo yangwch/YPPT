@@ -14,7 +14,6 @@
           :template="item.template"
           :css="item.css"
           :properties="item.properties"
-          @click="onSwitchCurPage(index)"
           @resize="options => $emit('resize', item, options)"
           @drag="options=> $emit('drag', item, options)"
           @dragSelect="options => $emit('dragSelect', options)"
@@ -22,7 +21,7 @@
           @active="$emit('active', item)"
           @deactive="$emit('deactive')"
           @input="html => $emit('input', html, item)"
-          ></p-editor>
+        ></p-editor>
         <p-img
           v-else-if="item.type === COMPONENT_TYPE.IMAGE"
           :key="item.id"
@@ -31,8 +30,13 @@
           :properties="item.properties"
           :active="item.active"
           :selected="item.selected"
-          @click="$emit('active', item)"
-          ></p-img>
+          @resize="options => $emit('resize', item, options)"
+          @drag="options=> $emit('drag', item, options)"
+          @dragSelect="options => $emit('dragSelect', options)"
+          @updateSnapshot="$emit('updateSnapshot')"
+          @active="$emit('active', item)"
+          @deactive="$emit('deactive')"
+        ></p-img>
       </template>
     </div>
     <rect-range :drawing="drawing" :start-pos="startPos" @up="up"></rect-range>
@@ -108,7 +112,7 @@
       },
       // 开始画
       startDrawing (ev) {
-        console.log(ev)
+        // console.log(ev)
         const cardDom = this.$refs.card
         if (ev.target === this.$el || ev.target === cardDom) {
           this.drawing = true

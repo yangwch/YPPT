@@ -15,7 +15,7 @@ export default class PageComponent {
   parseLocationTypes (css) {
     let cssCopy = {...css}
     Object.keys(css).forEach(key => {
-      if (['left', 'top', 'width', 'height'].indexOf(key) >= 0) {
+      if (['left', 'top', 'width', 'height', 'rotate'].indexOf(key) >= 0) {
         cssCopy[key] = parseFloat(css[key])
       }
     })

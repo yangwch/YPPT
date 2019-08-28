@@ -1,13 +1,22 @@
 <template>
-  <div
-    :class="['p', {placeholder: showPlaceholder, active: active || selected}]"
-    :style="style"
-    @click.stop="onActive"
-    v-clickoutside="onDeActive"
+  <drr
+    :left="css.left"
+    :top="css.top"
+    :width="css.width"
+    :height="css.height"
+    :z-index="css.zIndex"
+    :selected="selected"
+    :active="active"
+    :rotate-deg="css.rotate"
+    @resize="data => $emit('resize', data)"
+    @drag="data => $emit('drag', data)"
+    @active="onActive"
+    @deactive="onDeActive"
+    @dragSelect="data => $emit('dragSelect', data)"
   >
     <div ref="paragraph" v-html="currentValue" class="paragraph" contenteditable="true" @focus="onActive"></div>
     <!-- 操作区域 拖动 -->
-    <div class="anchor-move"
+    <!-- <div class="anchor-move"
       @mousedown.stop.prevent="stickDown('move', $event)"></div>
     <div class="anchor anchor-west"
       @mousedown.stop.prevent="stickDown('west', $event)"
@@ -16,89 +25,35 @@
     <div class="anchor anchor-east"
       @mousedown.stop.prevent="stickDown('east', $event)"
       @mousestart.stop.prevent="stickDown('east', $event)"
-      ></div>
-  </div>
+      ></div> -->
+  </drr>
 </template>
 <style lang="less">
-  .p {
+  .placeholder:after {
+    color: #ccc;
+    content: "\8BF7\8F93\5165\5185\5BB9";
     position: absolute;
-    cursor: move;
+    left: 15px;
+    top: 10px;
+    width: 120px;
+    z-index: -1;
+  }
+  .paragraph {
     outline: none;
-    min-width: 20px;
-    font-size: 18px;
-    color: rgb(103, 107, 111);
-    stroke-width: 0px;
-    border: 1px solid rgba(0, 0, 0, 0);
-    box-sizing: border-box;
-    &:hover {
-      border: 1px solid rgb(107, 153, 224);
-    }
-    // 激活时显示重置大小
-    &.active {
-      border: 1px solid rgb(107, 153, 224);
-      .anchor {
-        display: block;
-      }
-    }
-    &.placeholder:after {
-      color: #ccc;
-      content: "\8BF7\8F93\5165\5185\5BB9";
-      position: absolute;
-      left: 15px;
-      top: 10px;
-      width: 120px;
-      z-index: -1;
-    }
-    div.paragraph {
-      outline: none;
-      min-width: 100px;
-      cursor: text;
-      margin: 1px 5px;
-      position: relative;
-      z-index: 2;
-    }
-    // 重置大小
-    .anchor-move {
-      position: absolute;
-      cursor: move;
-      z-index: 1;
-      top: -5px;
-      left: 0;
-      bottom: -5px;
-      right: 0;
-      width: 100%;
-    }
-    .anchor {
-      display: none;
-      box-sizing: content-box;
-      position: absolute;
-      top: 50%;
-      width: 6px;
-      height: 6px;
-      transform: translateY(-50%);
-      background: #41464b;
-      border: 2px solid #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
-      &-west {
-        left: -5px;
-        cursor: w-resize;
-      }
-      &-east {
-        right: -5px;
-        cursor: e-resize;
-      }
-    }
+    min-width: 100px;
+    cursor: text;
+    margin: 1px 5px;
+    position: relative;
+    z-index: 2;
   }
 </style>
 
 <script>
-  import clickoutside from './../utils/clickoutside'
+  import Drr from './Drr.vue'
   export default {
     name: 'p-editor',
-    components: {},
-    directives: {
-      clickoutside
+    components: {
+      Drr
     },
     props: {
       active: Boolean,
@@ -135,18 +90,6 @@
         stickStartPos: {}
       }
     },
-    watch: {
-      x (val) {
-        if (val !== this.cx) {
-          this.cx = val
-        }
-      },
-      y (val) {
-        if (val !== this.cy) {
-          this.cy = val
-        }
-      }
-    },
     mounted () {
       let paragraph = this.$refs.paragraph
       paragraph.oninput = () => {
@@ -154,81 +97,10 @@
         this.showPlaceholder = !html.trim()
         this.$emit('input', paragraph.innerHTML)
       }
-
-      document.documentElement.addEventListener('mousemove', this.move)
-      document.documentElement.addEventListener('mouseup', this.up)
-      document.documentElement.addEventListener('mouseleave', this.up)
-      document.documentElement.addEventListener('click', this.onDeActive)
     },
     beforeDestroy () {
-      document.documentElement.removeEventListener('mousemove', this.move)
-      document.documentElement.removeEventListener('mouseup', this.up)
-      document.documentElement.removeEventListener('mouseleave', this.up)
-      document.documentElement.removeEventListener('click', this.onDeActive)
     },
     methods: {
-      stickDown (stick, ev) {
-        this.resizeW = stick === 'west'
-        this.resizeE = stick === 'east'
-        this.moving = stick === 'move'
-        if (this.selected) {
-          this.$emit('updateSnapshot')
-        }
-        this.stickStartPos.mouseX = ev.pageX || ev.touches[0].pageX
-        this.stickStartPos.mouseY = ev.pageY || ev.touches[0].pageY
-        this.stickStartPos.cx = this.css.left
-        this.stickStartPos.cy = this.css.top
-        this.stickStartPos.width = this.css.width
-      },
-      move (ev) {
-        ev.stopPropagation()
-        if (!this.resizeW && !this.resizeE && !this.moving) {
-          return
-        }
-        const x = ev.pageX || (ev.touches && ev.touches[0].pageX)
-        const y = ev.pageY || (ev.touches && ev.touches[0].pageY)
-        if (typeof x !== 'number') {
-          return
-        }
-        let { mouseX, mouseY, cx, cy, width } = this.stickStartPos
-        let rx = x - mouseX
-        // 右侧拖动
-        if (this.resizeE && rx !== 0) {
-          let widthf = this.cw = width + rx
-          this.$emit('resize', {
-            width: widthf
-          })
-        } else if (this.resizeW && rx !== 0) {
-          // 左侧拖动
-          let widthf = this.cw = width - rx
-          let left = this.cx = cx + rx
-          this.$emit('resize', {
-            x: left,
-            width: widthf
-          })
-        } else if (this.moving) {
-          // 移动
-          let ry = y - mouseY
-          if (!this.selected) {
-            const xf = this.cx = cx + rx
-            const yf = this.cy = cy + ry
-            this.$emit('drag', {
-              x: xf,
-              y: yf
-            })
-          } else {
-            this.$emit('dragSelect', {
-              rx,
-              ry
-            })
-          }
-        }
-      },
-      up () {
-        this.resizeW = false
-        this.resizeE = false
-        this.moving = false
-      },
       onActive () {
         this.$emit('active')
       },
